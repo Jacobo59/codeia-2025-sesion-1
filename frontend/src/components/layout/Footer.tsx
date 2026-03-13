@@ -71,7 +71,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Movies */}
+          {/* Películas */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Películas</h3>
             <ul className="space-y-2">
@@ -120,33 +120,6 @@ export const Footer = () => {
               <li>
                 <Link to="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Hoy en día
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/legal/aviso-legal" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Aviso Legal
-                </Link>
-              </li>
-              <li>
-                <Link to="/legal/privacidad" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Privacidad
-                </Link>
-              </li>
-              <li>
-                <Link to="/legal/cookies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Cookies
-                </Link>
-              </li>
-              <li>
-                <Link to="/legal/contratacion" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Condiciones de Contratación
                 </Link>
               </li>
             </ul>
