@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
-import { FilterBar, FilterOptions } from '../components/media/FilterBar';
+import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
 import { usePopularMovies, useTopRatedMovies, useUpcomingMovies } from '../hooks/useMedia';
 
 export const Movies = () => {
@@ -25,19 +25,19 @@ export const Movies = () => {
 
   // Note: In production, you would use the filters with the discover endpoint
   // For now, we show the UI and apply filters to displayed results
-  const applyFilters = (items: any[]) => {
+  const applyFilters = (items: any[] | null) => {
     if (!items) return items;
 
     let filtered = [...items];
 
     if (filters.genre) {
-      filtered = filtered.filter(item => item.genre_ids?.includes(parseInt(filters.genre)));
+      filtered = filtered.filter(item => item.genre_ids?.includes(parseInt(filters.genre!, 10)));
     }
 
     if (filters.year) {
       filtered = filtered.filter(item => {
         const year = new Date(item.release_date).getFullYear();
-        return year === parseInt(filters.year!);
+        return year === parseInt(filters.year!, 10);
       });
     }
 

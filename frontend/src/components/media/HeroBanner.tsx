@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { IMAGE_SIZES, TMDB_CONFIG } from '../../lib/constants';
 import { Button } from '../ui/button';
@@ -24,7 +23,8 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
   const overview = media.overview;
   const date = 'release_date' in media ? media.release_date : media.first_air_date;
   const year = date ? new Date(date).getFullYear() : 'N/A';
-  const type = media.media_type || ('title' in media ? 'movie' : 'tv');
+  const hasMediaType = 'media_type' in media && media.media_type;
+  const type = hasMediaType ? media.media_type : ('title' in media ? 'movie' : 'tv');
   const linkUrl = type === 'movie' ? `/movie/${media.id}` : `/tv/${media.id}`;
 
   const backdropUrl = media.backdrop_path
@@ -47,7 +47,7 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
         <div className="max-w-2xl space-y-4">
           {/* Type Badge */}
           <Badge variant="secondary" className="mb-2">
-            {type === 'movie' ? 'Movie' : 'TV Show'}
+            {type === 'movie' ? 'Película' : 'Serie'}
           </Badge>
 
           {/* Title */}
@@ -75,7 +75,7 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
 
           {/* Overview */}
           <p className="text-gray-200 text-base md:text-lg line-clamp-3">
-            {overview || 'No description available.'}
+            {overview || 'No hay descripción disponible.'}
           </p>
 
           {/* Actions */}
@@ -96,7 +96,7 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                Play Now
+                Reproducir
               </Button>
             </Link>
             <Link to={linkUrl}>
@@ -117,7 +117,7 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
                   <path d="M12 16v-4" />
                   <path d="M12 8h.01" />
                 </svg>
-                More Info
+                Más información
               </Button>
             </Link>
           </div>

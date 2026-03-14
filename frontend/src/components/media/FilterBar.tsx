@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select, SelectOption, Checkbox } from '../ui/select';
+import { Select, type SelectOption } from '../ui/select';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { X, Filter } from 'lucide-react';

@@ -1,4 +1,4 @@
-import { HeroBanner } from '../components/media/HeroBanner';
+import { HeroSlider } from '../components/media/HeroSlider';
 import { MediaRow } from '../components/media/MediaRow';
 import { useTrendingAll, usePopularMovies, usePopularTVShows, useTopRatedMovies, useTopRatedTVShows } from '../hooks/useMedia';
 
@@ -9,38 +9,35 @@ export const Home = () => {
   const { data: topRatedMovies, loading: topRatedMoviesLoading } = useTopRatedMovies();
   const { data: topRatedTVShows, loading: topRatedTVShowsLoading } = useTopRatedTVShows();
 
-  // Get first trending item for hero banner
-  const heroMedia = trendingData && trendingData.length > 0 ? trendingData[0] : null;
-
   return (
     <div>
-      {/* Hero Banner */}
-      <HeroBanner media={heroMedia} loading={trendingLoading} />
+      {/* Hero Slider */}
+      <HeroSlider items={trendingData} loading={trendingLoading} itemCount={5} />
 
       {/* Content Rows */}
       <div className="container mx-auto px-4 pb-8">
         <MediaRow
-          title="Trending Today"
+          title="Tendencias"
           items={trendingData}
           loading={trendingLoading}
         />
         <MediaRow
-          title="Popular Movies"
+          title="Películas Populares"
           items={popularMovies}
           loading={popularMoviesLoading}
         />
         <MediaRow
-          title="Popular TV Shows"
+          title="Series Populares"
           items={popularTVShows}
           loading={popularTVShowsLoading}
         />
         <MediaRow
-          title="Top Rated Movies"
+          title="Mejor Valoradas Películas"
           items={topRatedMovies}
           loading={topRatedMoviesLoading}
         />
         <MediaRow
-          title="Top Rated TV Shows"
+          title="Mejor Valoradas Series"
           items={topRatedTVShows}
           loading={topRatedTVShowsLoading}
         />

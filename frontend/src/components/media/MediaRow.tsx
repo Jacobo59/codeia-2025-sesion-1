@@ -72,7 +72,7 @@ export const MediaRow = ({
           ref={scrollContainerRef}
           onScroll={handleScroll}
           className="flex gap-4 overflow-x-auto pb-4"
-          style={{ scrollbarWidth: '0', WebkitScrollbarWidth: '0' } as React.CSSProperties}
+          style={{ scrollbarWidth: 'none' } as React.CSSProperties}
         >
           {loading
             ? Array.from({ length: skeletonCount }).map((_, i) => (

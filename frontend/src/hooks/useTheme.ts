@@ -7,7 +7,7 @@ const THEME_STORAGE_KEY = 'netflix-clone-theme';
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    return stored || 'system';
+    return stored || 'dark';
   });
 
   useEffect(() => {

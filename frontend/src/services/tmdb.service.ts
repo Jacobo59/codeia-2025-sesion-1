@@ -56,11 +56,17 @@ export const getOnTheAirTVShows = async (page: number = 1) => {
 
 // ============ Discover ============
 export const discoverMovies = async (options: DiscoverOptions = {}) => {
-  return apiClient.get<PaginatedResponse<Movie>>('/discover/movie', options);
+  return apiClient.get<PaginatedResponse<Movie>>(
+    '/discover/movie',
+    options as Record<string, string | number | boolean | undefined>
+  );
 };
 
 export const discoverTVShows = async (options: DiscoverOptions = {}) => {
-  return apiClient.get<PaginatedResponse<TVShow>>('/discover/tv', options);
+  return apiClient.get<PaginatedResponse<TVShow>>(
+    '/discover/tv',
+    options as Record<string, string | number | boolean | undefined>
+  );
 };
 
 // ============ Details ============

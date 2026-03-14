@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IMAGE_SIZES, TMDB_CONFIG } from '../lib/constants';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';

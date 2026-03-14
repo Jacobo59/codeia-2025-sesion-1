@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
-import { FilterBar, FilterOptions } from '../components/media/FilterBar';
+import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
 import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows } from '../hooks/useMedia';
 
 export const TVShows = () => {
@@ -24,19 +24,19 @@ export const TVShows = () => {
   };
 
   // Note: In production, you would use the filters with the discover endpoint
-  const applyFilters = (items: any[]) => {
+  const applyFilters = (items: any[] | null) => {
     if (!items) return items;
 
     let filtered = [...items];
 
     if (filters.genre) {
-      filtered = filtered.filter(item => item.genre_ids?.includes(parseInt(filters.genre)));
+      filtered = filtered.filter(item => item.genre_ids?.includes(parseInt(filters.genre!, 10)));
     }
 
     if (filters.year) {
       filtered = filtered.filter(item => {
         const year = new Date(item.first_air_date).getFullYear();
-        return year === parseInt(filters.year!);
+        return year === parseInt(filters.year!, 10);
       });
     }
 
