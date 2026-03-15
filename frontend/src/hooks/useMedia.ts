@@ -8,7 +8,9 @@ import {
   getTopRatedMovies,
   getTopRatedTVShows,
   getUpcomingMovies,
+  getNowPlayingMovies,
   getOnTheAirTVShows,
+  getAiringTodayTVShows,
   getMovieDetails,
   getTVShowDetails,
   getSimilarMovies,
@@ -249,6 +251,56 @@ export const useOnTheAirTVShows = (page: number = 1) => {
         setData(response.results);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to fetch on the air TV shows'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
+  return { data, loading, error };
+};
+
+// Hook for now playing movies
+export const useNowPlayingMovies = (page: number = 1) => {
+  const [data, setData] = useState<Movie[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getNowPlayingMovies(page);
+        setData(response.results);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to fetch now playing movies'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
+  return { data, loading, error };
+};
+
+// Hook for airing today TV shows
+export const useAiringTodayTVShows = (page: number = 1) => {
+  const [data, setData] = useState<TVShow[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await getAiringTodayTVShows(page);
+        setData(response.results);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to fetch airing today TV shows'));
       } finally {
         setLoading(false);
       }

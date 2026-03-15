@@ -30,7 +30,7 @@ export const MediaGrid = ({
   if (!items || items.length === 0) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
-        <p className="text-muted-foreground">No results found</p>
+        <p className="text-muted-foreground">No se encontraron resultados</p>
       </div>
     );
   }

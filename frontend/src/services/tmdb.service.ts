@@ -16,56 +16,64 @@ import type {
 
 // ============ Trending ============
 export const getTrendingAll = async (timeWindow: 'day' | 'week' = 'day') => {
-  return apiClient.get<PaginatedResponse<Media>>(`/trending/all/${timeWindow}`);
+  return apiClient.get<PaginatedResponse<Media>>(`/trending/all/${timeWindow}?language=es-ES`);
 };
 
 export const getTrendingMovies = async (timeWindow: 'day' | 'week' = 'day') => {
-  return apiClient.get<PaginatedResponse<Movie>>(`/trending/movie/${timeWindow}`);
+  return apiClient.get<PaginatedResponse<Movie>>(`/trending/movie/${timeWindow}?language=es-ES`);
 };
 
 export const getTrendingTV = async (timeWindow: 'day' | 'week' = 'day') => {
-  return apiClient.get<PaginatedResponse<TVShow>>(`/trending/tv/${timeWindow}`);
+  return apiClient.get<PaginatedResponse<TVShow>>(`/trending/tv/${timeWindow}?language=es-ES`);
 };
 
 // ============ Popular ============
 export const getPopularMovies = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Movie>>('/movie/popular', { page });
+  return apiClient.get<PaginatedResponse<Movie>>('/movie/popular', { page, language: 'es-ES' });
 };
 
 export const getPopularTVShows = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<TVShow>>('/tv/popular', { page });
+  return apiClient.get<PaginatedResponse<TVShow>>('/tv/popular', { page, language: 'es-ES' });
 };
 
 // ============ Top Rated ============
 export const getTopRatedMovies = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Movie>>('/movie/top_rated', { page });
+  return apiClient.get<PaginatedResponse<Movie>>('/movie/top_rated', { page, language: 'es-ES' });
 };
 
 export const getTopRatedTVShows = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<TVShow>>('/tv/top_rated', { page });
+  return apiClient.get<PaginatedResponse<TVShow>>('/tv/top_rated', { page, language: 'es-ES' });
 };
 
-// ============ Upcoming / On The Air ============
+// ============ Upcoming / On The Air / Now Playing / Airing Today ============
 export const getUpcomingMovies = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Movie>>('/movie/upcoming', { page });
+  return apiClient.get<PaginatedResponse<Movie>>('/movie/upcoming', { page, language: 'es-ES' });
+};
+
+export const getNowPlayingMovies = async (page: number = 1) => {
+  return apiClient.get<PaginatedResponse<Movie>>('/movie/now_playing', { page, language: 'es-ES' });
 };
 
 export const getOnTheAirTVShows = async (page: number = 1) => {
-  return apiClient.get<PaginatedResponse<TVShow>>('/tv/on_the_air', { page });
+  return apiClient.get<PaginatedResponse<TVShow>>('/tv/on_the_air', { page, language: 'es-ES' });
+};
+
+export const getAiringTodayTVShows = async (page: number = 1) => {
+  return apiClient.get<PaginatedResponse<TVShow>>('/tv/airing_today', { page, language: 'es-ES' });
 };
 
 // ============ Discover ============
 export const discoverMovies = async (options: DiscoverOptions = {}) => {
   return apiClient.get<PaginatedResponse<Movie>>(
     '/discover/movie',
-    options as Record<string, string | number | boolean | undefined>
+    { language: 'es-ES', ...(options as Record<string, string | number | boolean | undefined>) }
   );
 };
 
 export const discoverTVShows = async (options: DiscoverOptions = {}) => {
   return apiClient.get<PaginatedResponse<TVShow>>(
     '/discover/tv',
-    options as Record<string, string | number | boolean | undefined>
+    { language: 'es-ES', ...(options as Record<string, string | number | boolean | undefined>) }
   );
 };
 
@@ -73,75 +81,77 @@ export const discoverTVShows = async (options: DiscoverOptions = {}) => {
 export const getMovieDetails = async (id: number) => {
   return apiClient.get<MovieDetails>(`/movie/${id}`, {
     append_to_response: 'videos,credits,similar,recommendations',
+    language: 'es-ES',
   });
 };
 
 export const getTVShowDetails = async (id: number) => {
   return apiClient.get<TVShowDetails>(`/tv/${id}`, {
     append_to_response: 'videos,credits,similar,recommendations',
+    language: 'es-ES',
   });
 };
 
 // ============ Credits ============
 export const getMovieCredits = async (id: number) => {
-  return apiClient.get<CreditsResponse>(`/movie/${id}/credits`);
+  return apiClient.get<CreditsResponse>(`/movie/${id}/credits?language=es-ES`);
 };
 
 export const getTVShowCredits = async (id: number) => {
-  return apiClient.get<CreditsResponse>(`/tv/${id}/credits`);
+  return apiClient.get<CreditsResponse>(`/tv/${id}/credits?language=es-ES`);
 };
 
 // ============ Videos ============
 export const getMovieVideos = async (id: number) => {
-  return apiClient.get<VideosResponse>(`/movie/${id}/videos`);
+  return apiClient.get<VideosResponse>(`/movie/${id}/videos?language=es-ES`);
 };
 
 export const getTVShowVideos = async (id: number) => {
-  return apiClient.get<VideosResponse>(`/tv/${id}/videos`);
+  return apiClient.get<VideosResponse>(`/tv/${id}/videos?language=es-ES`);
 };
 
 // ============ Similar ============
 export const getSimilarMovies = async (id: number, page: number = 1) => {
-  return apiClient.get<SimilarMoviesResponse>(`/movie/${id}/similar`, { page });
+  return apiClient.get<SimilarMoviesResponse>(`/movie/${id}/similar`, { page, language: 'es-ES' });
 };
 
 export const getSimilarTVShows = async (id: number, page: number = 1) => {
-  return apiClient.get<SimilarTVShowsResponse>(`/tv/${id}/similar`, { page });
+  return apiClient.get<SimilarTVShowsResponse>(`/tv/${id}/similar`, { page, language: 'es-ES' });
 };
 
 // ============ Recommendations ============
 export const getRecommendedMovies = async (id: number, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Movie>>(`/movie/${id}/recommendations`, { page });
+  return apiClient.get<PaginatedResponse<Movie>>(`/movie/${id}/recommendations`, { page, language: 'es-ES' });
 };
 
 export const getRecommendedTVShows = async (id: number, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<TVShow>>(`/tv/${id}/recommendations`, { page });
+  return apiClient.get<PaginatedResponse<TVShow>>(`/tv/${id}/recommendations`, { page, language: 'es-ES' });
 };
 
 // ============ Search ============
 export const searchMulti = async (query: string, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Media>>('/search/multi', { query, page });
+  return apiClient.get<PaginatedResponse<Media>>('/search/multi', { query, page, language: 'es-ES' });
 };
 
 export const searchMovies = async (query: string, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Movie>>('/search/movie', { query, page });
+  return apiClient.get<PaginatedResponse<Movie>>('/search/movie', { query, page, language: 'es-ES' });
 };
 
 export const searchTVShows = async (query: string, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<TVShow>>('/search/tv', { query, page });
+  return apiClient.get<PaginatedResponse<TVShow>>('/search/tv', { query, page, language: 'es-ES' });
 };
 
 export const searchPeople = async (query: string, page: number = 1) => {
-  return apiClient.get<PaginatedResponse<Media>>('/search/person', { query, page });
+  return apiClient.get<PaginatedResponse<Media>>('/search/person', { query, page, language: 'es-ES' });
 };
 
 // ============ Genres ============
 export const getMovieGenres = async () => {
-  return apiClient.get<{ genres: Genre[] }>('/genre/movie/list');
+  return apiClient.get<{ genres: Genre[] }>('/genre/movie/list?language=es-ES');
 };
 
 export const getTVGenres = async () => {
-  return apiClient.get<{ genres: Genre[] }>('/genre/tv/list');
+  return apiClient.get<{ genres: Genre[] }>('/genre/tv/list?language=es-ES');
 };
 
 // Export all as a single service object for convenience
@@ -159,9 +169,11 @@ export const tmdbService = {
   getTopRatedMovies,
   getTopRatedTVShows,
 
-  // Upcoming / On The Air
+  // Upcoming / On The Air / Now Playing / Airing Today
   getUpcomingMovies,
+  getNowPlayingMovies,
   getOnTheAirTVShows,
+  getAiringTodayTVShows,
 
   // Discover
   discoverMovies,

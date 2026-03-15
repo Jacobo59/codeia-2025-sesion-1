@@ -1,17 +1,27 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
 import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
-import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows } from '../hooks/useMedia';
+import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows, useAiringTodayTVShows } from '../hooks/useMedia';
 
 export const TVShows = () => {
-  const [activeTab, setActiveTab] = useState('popular');
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get('tab') || 'popular';
+  const genre = searchParams.get('genre') || undefined;
+  const [activeTab, setActiveTab] = useState(tab);
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<FilterOptions>({});
+  const [filters, setFilters] = useState<FilterOptions>({ genre });
+
+  // Sync activeTab with URL query parameter
+  useEffect(() => {
+    setActiveTab(tab);
+  }, [tab]);
 
   const { data: popularTVShows, loading: popularLoading } = usePopularTVShows(page);
   const { data: topRatedTVShows, loading: topRatedLoading } = useTopRatedTVShows(page);
   const { data: onTheAirTVShows, loading: onTheAirLoading } = useOnTheAirTVShows(page);
+  const { data: airingTodayTVShows, loading: airingTodayLoading } = useAiringTodayTVShows(page);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -70,13 +80,14 @@ export const TVShows = () => {
   const filteredPopularTVShows = applyFilters(popularTVShows);
   const filteredTopRatedTVShows = applyFilters(topRatedTVShows);
   const filteredOnTheAirTVShows = applyFilters(onTheAirTVShows);
+  const filteredAiringTodayTVShows = applyFilters(airingTodayTVShows);
 
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">TV Shows</h1>
-          <p className="text-muted-foreground">Discover and explore the best TV shows</p>
+          <h1 className="text-4xl font-bold mb-2">Series</h1>
+          <p className="text-muted-foreground">Descubre y explora las mejores series</p>
         </div>
 
         {/* Filters */}
@@ -89,9 +100,10 @@ export const TVShows = () => {
 
         <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
           <TabsList className="mb-6">
-            <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="top-rated">Top Rated</TabsTrigger>
-            <TabsTrigger value="on-the-air">On The Air</TabsTrigger>
+            <TabsTrigger value="popular">Populares</TabsTrigger>
+            <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
+            <TabsTrigger value="on-the-air">En emisión</TabsTrigger>
+            <TabsTrigger value="airing-today">Hoy en día</TabsTrigger>
           </TabsList>
 
           <TabsContent value="popular">
@@ -126,6 +138,17 @@ export const TVShows = () => {
               />
             )}
           </TabsContent>
+
+          <TabsContent value="airing-today">
+            <MediaGrid items={filteredAiringTodayTVShows} loading={airingTodayLoading} />
+            {filteredAiringTodayTVShows && filteredAiringTodayTVShows.length > 0 && (
+              <Pagination
+                currentPage={page}
+                totalPages={Math.ceil(500 / 20)}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </TabsContent>
         </Tabs>
       </div>
     </div>
@@ -142,7 +165,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: { currentPage: nu
         disabled={currentPage === 1}
         className="px-3 py-2 rounded-md border border-input hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Previous
+        Anterior
       </button>
 
       {pages.map((page, i) => (
@@ -169,7 +192,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: { currentPage: nu
         disabled={currentPage === totalPages}
         className="px-3 py-2 rounded-md border border-input hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Next
+        Siguiente
       </button>
     </div>
   );

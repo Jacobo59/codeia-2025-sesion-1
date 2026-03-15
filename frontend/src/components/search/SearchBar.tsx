@@ -23,7 +23,7 @@ export const SearchBar = () => {
     <form onSubmit={handleSubmit} className="flex gap-2 max-w-2xl mx-auto">
       <Input
         type="search"
-        placeholder="Search for movies, TV shows, people..."
+        placeholder="Buscar películas, series, personas..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="flex-1 h-12 text-base"
@@ -43,7 +43,7 @@ export const SearchBar = () => {
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.3-4.3" />
         </svg>
-        Search
+        Buscar
       </Button>
     </form>
   );

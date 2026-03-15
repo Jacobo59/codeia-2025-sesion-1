@@ -205,7 +205,7 @@ export const LoadingSpinner = ({ size = 'default' }: { size?: 'small' | 'default
 };
 
 // Full Page Loading
-export const FullPageLoading = ({ message = 'Loading...' }: { message?: string }) => {
+export const FullPageLoading = ({ message = 'Cargando...' }: { message?: string }) => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="text-center space-y-4">
@@ -217,7 +217,7 @@ export const FullPageLoading = ({ message = 'Loading...' }: { message?: string }
 };
 
 // Inline Loading
-export const InlineLoading = ({ message = 'Loading...' }: { message?: string }) => {
+export const InlineLoading = ({ message = 'Cargando...' }: { message?: string }) => {
   return (
     <div className="flex items-center gap-3 py-4">
       <LoadingSpinner />

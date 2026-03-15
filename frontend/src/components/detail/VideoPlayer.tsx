@@ -14,7 +14,7 @@ export const VideoPlayer = ({ videos, loading }: VideoPlayerProps) => {
   if (loading) {
     return (
       <div className="py-8">
-        <h2 className="mb-4 text-xl font-bold">Trailers & Videos</h2>
+        <h2 className="mb-4 text-xl font-bold">Trailers y Videos</h2>
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="h-64 rounded-lg bg-muted animate-pulse" />
@@ -40,7 +40,7 @@ export const VideoPlayer = ({ videos, loading }: VideoPlayerProps) => {
       <div className="py-8">
         <div className="mb-4 flex items-center gap-4">
           <Button variant="outline" size="sm" onClick={() => setSelectedVideo(null)}>
-            Back to videos
+            Volver a videos
           </Button>
           <h2 className="text-xl font-bold">{selectedVideo.name}</h2>
         </div>
@@ -59,7 +59,7 @@ export const VideoPlayer = ({ videos, loading }: VideoPlayerProps) => {
 
   return (
     <div className="py-8">
-      <h2 className="mb-4 text-xl font-bold">Trailers & Videos</h2>
+      <h2 className="mb-4 text-xl font-bold">Trailers y Videos</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {allVideos.map((video) => (
           <div
@@ -91,7 +91,7 @@ export const VideoPlayer = ({ videos, loading }: VideoPlayerProps) => {
                 </Badge>
                 {video.official && (
                   <Badge variant="outline" className="text-xs">
-                    Official
+                    Oficial
                   </Badge>
                 )}
               </div>

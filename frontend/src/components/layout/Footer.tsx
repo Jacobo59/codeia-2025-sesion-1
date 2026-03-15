@@ -39,32 +39,32 @@ export const Footer = () => {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Categorías</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=28" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Acción
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=35" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Comedia
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=18" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Drama
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=27" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Terror
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=878" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Ciencia Ficción
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?genre=16" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Animación
                 </Link>
               </li>
@@ -76,22 +76,22 @@ export const Footer = () => {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Películas</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?tab=popular" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Populares
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?tab=top-rated" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Mejor valoradas
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?tab=upcoming" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Próximos estrenos
                 </Link>
               </li>
               <li>
-                <Link to="/movies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/movies?tab=now-playing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Ahora en cines
                 </Link>
               </li>
@@ -103,22 +103,22 @@ export const Footer = () => {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Series</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/tv-shows?tab=popular" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Populares
                 </Link>
               </li>
               <li>
-                <Link to="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/tv-shows?tab=top-rated" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Mejor valoradas
                 </Link>
               </li>
               <li>
-                <Link to="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/tv-shows?tab=on-the-air" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   En emisión
                 </Link>
               </li>
               <li>
-                <Link to="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/tv-shows?tab=airing-today" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Hoy en día
                 </Link>
               </li>

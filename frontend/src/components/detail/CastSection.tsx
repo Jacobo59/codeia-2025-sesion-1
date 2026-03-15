@@ -10,7 +10,7 @@ export const CastSection = ({ cast, loading }: CastSectionProps) => {
   if (loading) {
     return (
       <div className="py-8">
-        <h2 className="mb-4 text-xl font-bold">Cast</h2>
+        <h2 className="mb-4 text-xl font-bold">Reparto</h2>
         <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="flex-shrink-0 w-32 space-y-2">
@@ -32,7 +32,7 @@ export const CastSection = ({ cast, loading }: CastSectionProps) => {
 
   return (
     <div className="py-8">
-      <h2 className="mb-4 text-xl font-bold">Cast</h2>
+      <h2 className="mb-4 text-xl font-bold">Reparto</h2>
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
         {displayCast.map((person) => (
           <div key={person.id} className="flex-shrink-0 w-32">

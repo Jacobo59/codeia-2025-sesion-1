@@ -25,7 +25,7 @@ export const MediaDetail = () => {
   if (!mediaId || !type) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Invalid media ID or type</p>
+        <p className="text-muted-foreground">ID de medio o tipo no válido</p>
       </div>
     );
   }
@@ -70,7 +70,7 @@ export const MediaDetail = () => {
               />
             ) : (
               <div className="aspect-[2/3] w-full rounded-lg bg-muted flex items-center justify-center">
-                <p className="text-muted-foreground">No poster available</p>
+                <p className="text-muted-foreground">No hay póster disponible</p>
               </div>
             )}
           </div>
@@ -106,7 +106,7 @@ export const MediaDetail = () => {
                 )}
                 {!isMovie && (details as TVShowDetails).number_of_seasons > 0 && (
                   <span>
-                    {(details as TVShowDetails).number_of_seasons} Season
+                    {(details as TVShowDetails).number_of_seasons} Temporada
                     {(details as TVShowDetails).number_of_seasons > 1 && 's'}
                   </span>
                 )}
@@ -126,9 +126,9 @@ export const MediaDetail = () => {
 
             {/* Overview */}
             <div>
-              <h2 className="text-xl font-semibold mb-2">Overview</h2>
+              <h2 className="text-xl font-semibold mb-2">Resumen</h2>
               <p className="text-muted-foreground leading-relaxed">
-                {details.overview || 'No overview available.'}
+                {details.overview || 'No hay resumen disponible.'}
               </p>
             </div>
 
@@ -136,13 +136,13 @@ export const MediaDetail = () => {
             <div className="grid grid-cols-2 gap-4">
               {isMovie && (details as MovieDetails).budget > 0 && (
                 <div>
-                  <p className="text-sm text-muted-foreground">Budget</p>
+                  <p className="text-sm text-muted-foreground">Presupuesto</p>
                   <p className="font-semibold">${(details as MovieDetails).budget.toLocaleString()}</p>
                 </div>
               )}
               {isMovie && (details as MovieDetails).revenue > 0 && (
                 <div>
-                  <p className="text-sm text-muted-foreground">Revenue</p>
+                  <p className="text-sm text-muted-foreground">Recaudación</p>
                   <p className="font-semibold">${(details as MovieDetails).revenue.toLocaleString()}</p>
                 </div>
               )}
@@ -165,7 +165,7 @@ export const MediaDetail = () => {
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                Play Now
+                Reproducir ahora
               </Button>
               <Button size="lg" variant="outline">
                 <svg
@@ -182,7 +182,7 @@ export const MediaDetail = () => {
                 >
                   <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                 </svg>
-                Watchlist
+                Mi lista
               </Button>
             </div>
           </div>
@@ -197,13 +197,13 @@ export const MediaDetail = () => {
         {/* Similar */}
         {isMovie ? (
           <SimilarMedia
-            title="Similar Movies"
+            title="Películas similares"
             items={(movieDetails as MovieDetails)?.similar?.results || []}
             loading={movieLoading}
           />
         ) : (
           <SimilarMedia
-            title="Similar TV Shows"
+            title="Series similares"
             items={(tvDetails as TVShowDetails)?.similar?.results || []}
             loading={tvLoading}
           />

@@ -21,9 +21,9 @@ export const Search = () => {
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Search</h1>
+          <h1 className="text-4xl font-bold mb-2">Búsqueda</h1>
           <p className="text-muted-foreground">
-            Find your favorite movies, TV shows, and people
+            Encuentra tus películas, series y personas favoritas
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export const Search = () => {
 
         {!query && history.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-4">Recent Searches</h2>
+            <h2 className="text-lg font-semibold mb-4">Búsquedas recientes</h2>
             <div className="flex flex-wrap gap-2">
               {history.map((item) => (
                 <button

@@ -77,7 +77,7 @@ export const SearchResults = ({ query, results, loading }: SearchResultsProps) =
       <div className="flex min-h-[400px] items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
-          <p className="text-muted-foreground">Searching...</p>
+          <p className="text-muted-foreground">Buscando...</p>
         </div>
       </div>
     );
@@ -87,7 +87,7 @@ export const SearchResults = ({ query, results, loading }: SearchResultsProps) =
     return (
       <div className="flex min-h-[400px] items-center justify-center">
         <p className="text-muted-foreground text-lg">
-          Start typing to search for movies, TV shows, and people
+          Empieza a escribir para buscar películas, series y personas
         </p>
       </div>
     );
@@ -97,7 +97,7 @@ export const SearchResults = ({ query, results, loading }: SearchResultsProps) =
     return (
       <div className="flex min-h-[400px] items-center justify-center">
         <p className="text-muted-foreground text-lg">
-          No results found for "{query}"
+          No se encontraron resultados para "{query}"
         </p>
       </div>
     );
@@ -110,10 +110,10 @@ export const SearchResults = ({ query, results, loading }: SearchResultsProps) =
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid w-full max-w-md grid-cols-4">
-        <TabsTrigger value="all">All ({results.length})</TabsTrigger>
-        <TabsTrigger value="movies">Movies ({movies.length})</TabsTrigger>
-        <TabsTrigger value="tv">TV ({tvShows.length})</TabsTrigger>
-        <TabsTrigger value="people">People ({people.length})</TabsTrigger>
+        <TabsTrigger value="all">Todos ({results.length})</TabsTrigger>
+        <TabsTrigger value="movies">Películas ({movies.length})</TabsTrigger>
+        <TabsTrigger value="tv">Series ({tvShows.length})</TabsTrigger>
+        <TabsTrigger value="people">Personas ({people.length})</TabsTrigger>
       </TabsList>
 
       <TabsContent value="all" className="mt-6">
@@ -128,10 +128,10 @@ export const SearchResults = ({ query, results, loading }: SearchResultsProps) =
                   <div className="absolute top-2 right-2">
                     <Badge variant="secondary" className="text-xs">
                       {getMediaType(item) === 'movie'
-                        ? 'Movie'
+                        ? 'Película'
                         : getMediaType(item) === 'tv'
-                        ? 'TV'
-                        : 'Person'}
+                        ? 'Serie'
+                        : 'Persona'}
                     </Badge>
                   </div>
                 </>

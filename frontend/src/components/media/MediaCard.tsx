@@ -63,7 +63,7 @@ export const MediaCard = ({
         {/* Type Badge - Solo para resultados de búsqueda con media_type explícito */}
         {type && (
           <Badge variant="secondary" className="absolute left-2 top-2 text-xs">
-            {type}
+            {type === 'movie' ? 'Película' : 'Serie'}
           </Badge>
         )}
       </div>

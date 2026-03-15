@@ -1,17 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
 import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
-import { usePopularMovies, useTopRatedMovies, useUpcomingMovies } from '../hooks/useMedia';
+import { usePopularMovies, useTopRatedMovies, useUpcomingMovies, useNowPlayingMovies } from '../hooks/useMedia';
 
 export const Movies = () => {
-  const [activeTab, setActiveTab] = useState('popular');
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'popular');
+  const genre = searchParams.get('genre') || undefined;
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<FilterOptions>({});
+  const [filters, setFilters] = useState<FilterOptions>({ genre });
+
+  // Sync activeTab with URL query parameter
+  useEffect(() => {
+    const tab = searchParams.get('tab') || 'popular';
+    setActiveTab(tab);
+  }, [searchParams]);
 
   const { data: popularMovies, loading: popularLoading } = usePopularMovies(page);
   const { data: topRatedMovies, loading: topRatedLoading } = useTopRatedMovies(page);
   const { data: upcomingMovies, loading: upcomingLoading } = useUpcomingMovies(page);
+  const { data: nowPlayingMovies, loading: nowPlayingLoading } = useNowPlayingMovies(page);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -71,13 +81,14 @@ export const Movies = () => {
   const filteredPopularMovies = applyFilters(popularMovies);
   const filteredTopRatedMovies = applyFilters(topRatedMovies);
   const filteredUpcomingMovies = applyFilters(upcomingMovies);
+  const filteredNowPlayingMovies = applyFilters(nowPlayingMovies);
 
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Movies</h1>
-          <p className="text-muted-foreground">Discover and explore the best movies</p>
+          <h1 className="text-4xl font-bold mb-2">Películas</h1>
+          <p className="text-muted-foreground">Descubre y explora las mejores películas</p>
         </div>
 
         {/* Filters */}
@@ -90,9 +101,10 @@ export const Movies = () => {
 
         <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
           <TabsList className="mb-6">
-            <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="top-rated">Top Rated</TabsTrigger>
-            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+            <TabsTrigger value="popular">Populares</TabsTrigger>
+            <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
+            <TabsTrigger value="upcoming">Próximos estrenos</TabsTrigger>
+            <TabsTrigger value="now-playing">Ahora en cines</TabsTrigger>
           </TabsList>
 
           <TabsContent value="popular">
@@ -127,6 +139,17 @@ export const Movies = () => {
               />
             )}
           </TabsContent>
+
+          <TabsContent value="now-playing">
+            <MediaGrid items={filteredNowPlayingMovies} loading={nowPlayingLoading} />
+            {filteredNowPlayingMovies && filteredNowPlayingMovies.length > 0 && (
+              <Pagination
+                currentPage={page}
+                totalPages={Math.ceil(500 / 20)}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </TabsContent>
         </Tabs>
       </div>
     </div>
@@ -143,7 +166,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: { currentPage: nu
         disabled={currentPage === 1}
         className="px-3 py-2 rounded-md border border-input hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Previous
+        Anterior
       </button>
 
       {pages.map((page, i) => (
@@ -170,7 +193,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: { currentPage: nu
         disabled={currentPage === totalPages}
         className="px-3 py-2 rounded-md border border-input hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Next
+        Siguiente
       </button>
     </div>
   );
