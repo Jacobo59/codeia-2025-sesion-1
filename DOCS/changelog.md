@@ -113,12 +113,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Roadmap
 
-### [0.2.0] - Deadline: 2026-03-27 (2 weeks)
+### [0.2.0] - Deadline: 2026-03-27 (2 weeks) ✅ **EARLY RELEASE**
 **Theme & UI Enhancements**
-- Light/Dark theme toggle
-- Improved dropdown menus
-- Enhanced filter components
-- Better loading skeletons
+- [x] Complete frontend translation to Spanish
+- [x] Dynamic titles based on selected tab/genre
+- [x] Genre filtering functionality
+- [x] Footer link corrections
+- [ ] Light/Dark theme toggle
+- [ ] Improved dropdown menus
+- [ ] Enhanced filter components
+- [ ] Better loading skeletons
 
 ### [0.3.0] - Deadline: 2026-04-10 (2 weeks)
 **User Features**
@@ -222,9 +226,13 @@ chore(deps): upgrade react-router-dom to v7
 - [x] Documentation
 
 ### Sprint 2 (2026-03-27 - 2026-04-10)
+- [x] Complete frontend translation to Spanish
+- [x] Genre filtering functionality
+- [x] Dynamic titles implementation
+- [x] Footer link corrections
 - [ ] Theme switcher
 - [ ] Dropdown components
-- [ ] Filter components
+- [ ] Enhanced filter components
 - [ ] Enhanced skeletons
 
 ### Sprint 3 (2026-04-10 - 2026-04-24)
