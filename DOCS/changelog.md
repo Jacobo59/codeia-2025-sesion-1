@@ -9,15 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned - Deadline: 2026-03-27
-- [ ] **feat**: Add dropdown menus for filters
-- [ ] **feat**: Implement advanced filters (genre, year, rating)
+### Planned
 - [ ] **feat**: Add theme switcher (light/dark mode)
-- [ ] **feat**: Add pagination component
 - [ ] **feat**: Implement infinite scroll
 - [ ] **feat**: Add watchlist/favorites functionality
 - [ ] **feat**: Add recently watched section
 - [ ] **feat**: Implement video player for trailers
+
+---
+
+## [0.2.0] - Release Date: 2026-03-16 ✅ **RELEASED**
+
+### Added
+- **feat**: Discover movies and TV shows by genre functionality
+- **feat**: Dynamic titles based on selected tab and genre
+  - "Películas Populares", "Películas Mejor Valoradas", etc.
+  - "Series Populares", "Series Mejor Valoradas", etc.
+  - "Películas de [Género]", "Series de [Género]"
+- **feat**: New hooks for discover endpoints
+  - `useDiscoverMovies` - Filter movies by genre
+  - `useDiscoverTVShows` - Filter TV shows by genre
+- **feat**: Genre name mappings for Spanish
+  - Movie genres (Acción, Comedia, Drama, etc.)
+  - TV genres (Acción, Animación, Comedia, etc.)
+
+### Changed
+- **feat**: Complete frontend translation to Spanish
+  - All UI components and pages translated
+  - FilterBar, Footer, Search, MediaDetail
+  - Pagination, Tabs, Buttons
+  - Genre names in Spanish
+  - Movie and TV category titles
+
+### Fixed
+- **fix**: Footer links now work correctly
+  - Movies tabs (Populares, Mejor valoradas, Próximos estrenos)
+  - TV Shows tabs (Populares, Mejor valoradas, En emisión)
+  - Genre filtering links from footer
 
 ---
 
