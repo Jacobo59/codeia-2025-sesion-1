@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer className="border-t bg-muted/40 mt-auto">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 justify-items-center lg:justify-items-start">
           {/* Navigation */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Navegación</h3>
@@ -121,28 +121,6 @@ export const Footer = () => {
                 <Link to="/tv-shows?tab=airing-today" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Hoy en día
                 </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Soporte</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  TMDB API
-                </a>
-              </li>
-              <li>
-                <a href="https://developers.themoviedb.org/3" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Documentación API
-                </a>
-              </li>
-              <li>
-                <a href="https://www.themoviedb.org/documentation/api" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Términos de TMDB
-                </a>
               </li>
             </ul>
           </div>

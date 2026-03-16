@@ -1,27 +1,80 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
 import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
-import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows, useAiringTodayTVShows } from '../hooks/useMedia';
+import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows, useAiringTodayTVShows, useDiscoverTVShows } from '../hooks/useMedia';
+
+// Genre mapping for TV shows
+const TV_GENRE_NAMES: Record<string, string> = {
+  '10759': 'Acción',
+  '16': 'Animación',
+  '35': 'Comedia',
+  '80': 'Crimen',
+  '99': 'Documental',
+  '18': 'Drama',
+  '10751': 'Familia',
+  '10762': 'Infantil',
+  '9648': 'Misterio',
+  '10763': 'Noticias',
+  '10764': 'Reality',
+  '10765': 'Telenovela',
+  '10766': 'Talk Show',
+  '10767': 'Concursos',
+  '10768': 'Película',
+  '10769': 'Ciencia Ficción',
+  '10770': 'Thriller',
+  '37': 'Western'
+};
 
 export const TVShows = () => {
   const [searchParams] = useSearchParams();
-  const tab = searchParams.get('tab') || 'popular';
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'popular');
   const genre = searchParams.get('genre') || undefined;
-  const [activeTab, setActiveTab] = useState(tab);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<FilterOptions>({ genre });
 
+  // Get genre name for title
+  const genreName = useMemo(() => {
+    return genre ? TV_GENRE_NAMES[genre] : null;
+  }, [genre]);
+
+  // Get title and description based on active tab
+  const getTitle = () => {
+    if (genreName) return `Series de ${genreName}`;
+    switch (activeTab) {
+      case 'popular': return 'Series Populares';
+      case 'top-rated': return 'Series Mejor Valoradas';
+      case 'on-the-air': return 'Series En Emisión';
+      case 'airing-today': return 'Series Hoy en Día';
+      default: return 'Series';
+    }
+  };
+
+  const getDescription = () => {
+    if (genreName) return `Descubre y explora las mejores series de ${genreName}`;
+    switch (activeTab) {
+      case 'popular': return 'Descubre las series más populares del momento';
+      case 'top-rated': return 'Explora las series mejor valoradas por el público';
+      case 'on-the-air': return 'Las series que se están emitiendo actualmente';
+      case 'airing-today': return 'Series que se emiten hoy';
+      default: return 'Descubre y explora las mejores series';
+    }
+  };
+
   // Sync activeTab with URL query parameter
   useEffect(() => {
+    const tab = searchParams.get('tab') || 'popular';
     setActiveTab(tab);
-  }, [tab]);
+  }, [searchParams]);
 
   const { data: popularTVShows, loading: popularLoading } = usePopularTVShows(page);
   const { data: topRatedTVShows, loading: topRatedLoading } = useTopRatedTVShows(page);
   const { data: onTheAirTVShows, loading: onTheAirLoading } = useOnTheAirTVShows(page);
   const { data: airingTodayTVShows, loading: airingTodayLoading } = useAiringTodayTVShows(page);
+
+  // Use discover endpoint when genre is selected
+  const { data: discoverTVShows, loading: discoverLoading } = useDiscoverTVShows(genre, page);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -86,8 +139,8 @@ export const TVShows = () => {
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Series</h1>
-          <p className="text-muted-foreground">Descubre y explora las mejores series</p>
+          <h1 className="text-4xl font-bold mb-2">{getTitle()}</h1>
+          <p className="text-muted-foreground">{getDescription()}</p>
         </div>
 
         {/* Filters */}
@@ -98,58 +151,72 @@ export const TVShows = () => {
           type="tv"
         />
 
-        <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="popular">Populares</TabsTrigger>
-            <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
-            <TabsTrigger value="on-the-air">En emisión</TabsTrigger>
-            <TabsTrigger value="airing-today">Hoy en día</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="popular">
-            <MediaGrid items={filteredPopularTVShows} loading={popularLoading} />
-            {filteredPopularTVShows && filteredPopularTVShows.length > 0 && (
+        {/* Show genre-specific TV shows when genre is selected */}
+        {genre ? (
+          <>
+            <MediaGrid items={discoverTVShows} loading={discoverLoading} />
+            {discoverTVShows && discoverTVShows.length > 0 && (
               <Pagination
                 currentPage={page}
-                totalPages={Math.ceil(10000 / 20)}
+                totalPages={500}
                 onPageChange={handlePageChange}
               />
             )}
-          </TabsContent>
+          </>
+        ) : (
+          <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
+            <TabsList className="mb-6">
+              <TabsTrigger value="popular">Populares</TabsTrigger>
+              <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
+              <TabsTrigger value="on-the-air">En emisión</TabsTrigger>
+              <TabsTrigger value="airing-today">Hoy en día</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="top-rated">
-            <MediaGrid items={filteredTopRatedTVShows} loading={topRatedLoading} />
-            {filteredTopRatedTVShows && filteredTopRatedTVShows.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(10000 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
+            <TabsContent value="popular">
+              <MediaGrid items={filteredPopularTVShows} loading={popularLoading} />
+              {filteredPopularTVShows && filteredPopularTVShows.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(10000 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
 
-          <TabsContent value="on-the-air">
-            <MediaGrid items={filteredOnTheAirTVShows} loading={onTheAirLoading} />
-            {filteredOnTheAirTVShows && filteredOnTheAirTVShows.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(500 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
+            <TabsContent value="top-rated">
+              <MediaGrid items={filteredTopRatedTVShows} loading={topRatedLoading} />
+              {filteredTopRatedTVShows && filteredTopRatedTVShows.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(10000 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
 
-          <TabsContent value="airing-today">
-            <MediaGrid items={filteredAiringTodayTVShows} loading={airingTodayLoading} />
-            {filteredAiringTodayTVShows && filteredAiringTodayTVShows.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(500 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="on-the-air">
+              <MediaGrid items={filteredOnTheAirTVShows} loading={onTheAirLoading} />
+              {filteredOnTheAirTVShows && filteredOnTheAirTVShows.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(500 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
+
+            <TabsContent value="airing-today">
+              <MediaGrid items={filteredAiringTodayTVShows} loading={airingTodayLoading} />
+              {filteredAiringTodayTVShows && filteredAiringTodayTVShows.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(500 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
+          </Tabs>
+        )}
       </div>
     </div>
   );

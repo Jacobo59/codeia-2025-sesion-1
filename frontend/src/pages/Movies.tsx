@@ -1,9 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MediaGrid } from '../components/media/MediaGrid';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
 import { FilterBar, type FilterOptions } from '../components/media/FilterBar';
-import { usePopularMovies, useTopRatedMovies, useUpcomingMovies, useNowPlayingMovies } from '../hooks/useMedia';
+import { usePopularMovies, useTopRatedMovies, useUpcomingMovies, useNowPlayingMovies, useDiscoverMovies } from '../hooks/useMedia';
+
+// Genre mapping for movies
+const GENRE_NAMES: Record<string, string> = {
+  '28': 'Acción',
+  '12': 'Aventura',
+  '16': 'Animación',
+  '35': 'Comedia',
+  '80': 'Crimen',
+  '99': 'Documental',
+  '18': 'Drama',
+  '10751': 'Familia',
+  '14': 'Fantasía',
+  '36': 'Historia',
+  '27': 'Terror',
+  '10402': 'Música',
+  '9648': 'Misterio',
+  '10749': 'Romance',
+  '878': 'Ciencia Ficción',
+  '10770': 'Película de TV',
+  '53': 'Thriller',
+  '37': 'Bélica',
+  '10752': 'Western'
+};
 
 export const Movies = () => {
   const [searchParams] = useSearchParams();
@@ -11,6 +34,34 @@ export const Movies = () => {
   const genre = searchParams.get('genre') || undefined;
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<FilterOptions>({ genre });
+
+  // Get genre name for title
+  const genreName = useMemo(() => {
+    return genre ? GENRE_NAMES[genre] : null;
+  }, [genre]);
+
+  // Get title and description based on active tab
+  const getTitle = () => {
+    if (genreName) return `Películas de ${genreName}`;
+    switch (activeTab) {
+      case 'popular': return 'Películas Populares';
+      case 'top-rated': return 'Películas Mejor Valoradas';
+      case 'upcoming': return 'Próximos Estrenos';
+      case 'now-playing': return 'Películas Ahora en Cines';
+      default: return 'Películas';
+    }
+  };
+
+  const getDescription = () => {
+    if (genreName) return `Descubre y explora las mejores películas de ${genreName}`;
+    switch (activeTab) {
+      case 'popular': return 'Descubre las películas más populares del momento';
+      case 'top-rated': return 'Explora las películas mejor valoradas por el público';
+      case 'upcoming': return 'No te pierdas los próximos estrenos en cines';
+      case 'now-playing': return 'Descubre las películas que están actualmente en cines';
+      default: return 'Descubre y explora las mejores películas';
+    }
+  };
 
   // Sync activeTab with URL query parameter
   useEffect(() => {
@@ -22,6 +73,9 @@ export const Movies = () => {
   const { data: topRatedMovies, loading: topRatedLoading } = useTopRatedMovies(page);
   const { data: upcomingMovies, loading: upcomingLoading } = useUpcomingMovies(page);
   const { data: nowPlayingMovies, loading: nowPlayingLoading } = useNowPlayingMovies(page);
+
+  // Use discover endpoint when genre is selected
+  const { data: discoverMovies, loading: discoverLoading } = useDiscoverMovies(genre, page);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -87,8 +141,8 @@ export const Movies = () => {
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Películas</h1>
-          <p className="text-muted-foreground">Descubre y explora las mejores películas</p>
+          <h1 className="text-4xl font-bold mb-2">{getTitle()}</h1>
+          <p className="text-muted-foreground">{getDescription()}</p>
         </div>
 
         {/* Filters */}
@@ -99,58 +153,72 @@ export const Movies = () => {
           type="movie"
         />
 
-        <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="popular">Populares</TabsTrigger>
-            <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
-            <TabsTrigger value="upcoming">Próximos estrenos</TabsTrigger>
-            <TabsTrigger value="now-playing">Ahora en cines</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="popular">
-            <MediaGrid items={filteredPopularMovies} loading={popularLoading} />
-            {filteredPopularMovies && filteredPopularMovies.length > 0 && (
+        {/* Show genre-specific movies when genre is selected */}
+        {genre ? (
+          <>
+            <MediaGrid items={discoverMovies} loading={discoverLoading} />
+            {discoverMovies && discoverMovies.length > 0 && (
               <Pagination
                 currentPage={page}
-                totalPages={Math.ceil(10000 / 20)}
+                totalPages={500}
                 onPageChange={handlePageChange}
               />
             )}
-          </TabsContent>
+          </>
+        ) : (
+          <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setPage(1); }}>
+            <TabsList className="mb-6">
+              <TabsTrigger value="popular">Populares</TabsTrigger>
+              <TabsTrigger value="top-rated">Mejor valoradas</TabsTrigger>
+              <TabsTrigger value="upcoming">Próximos estrenos</TabsTrigger>
+              <TabsTrigger value="now-playing">Ahora en cines</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="top-rated">
-            <MediaGrid items={filteredTopRatedMovies} loading={topRatedLoading} />
-            {filteredTopRatedMovies && filteredTopRatedMovies.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(10000 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
+            <TabsContent value="popular">
+              <MediaGrid items={filteredPopularMovies} loading={popularLoading} />
+              {filteredPopularMovies && filteredPopularMovies.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(10000 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
 
-          <TabsContent value="upcoming">
-            <MediaGrid items={filteredUpcomingMovies} loading={upcomingLoading} />
-            {filteredUpcomingMovies && filteredUpcomingMovies.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(500 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
+            <TabsContent value="top-rated">
+              <MediaGrid items={filteredTopRatedMovies} loading={topRatedLoading} />
+              {filteredTopRatedMovies && filteredTopRatedMovies.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(10000 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
 
-          <TabsContent value="now-playing">
-            <MediaGrid items={filteredNowPlayingMovies} loading={nowPlayingLoading} />
-            {filteredNowPlayingMovies && filteredNowPlayingMovies.length > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={Math.ceil(500 / 20)}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="upcoming">
+              <MediaGrid items={filteredUpcomingMovies} loading={upcomingLoading} />
+              {filteredUpcomingMovies && filteredUpcomingMovies.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(500 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
+
+            <TabsContent value="now-playing">
+              <MediaGrid items={filteredNowPlayingMovies} loading={nowPlayingLoading} />
+              {filteredNowPlayingMovies && filteredNowPlayingMovies.length > 0 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={Math.ceil(500 / 20)}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </TabsContent>
+          </Tabs>
+        )}
       </div>
     </div>
   );

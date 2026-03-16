@@ -21,6 +21,8 @@ import {
   getTVShowCredits,
   getMovieVideos,
   getTVShowVideos,
+  discoverMovies,
+  discoverTVShows,
 } from '../services/tmdb.service';
 import type {
   Movie,
@@ -526,6 +528,64 @@ export const useVideos = (type: 'movie' | 'tv', id: number | null) => {
 
     fetchData();
   }, [type, id]);
+
+  return { data, loading, error };
+};
+
+// Hook for discovering movies by genre
+export const useDiscoverMovies = (genre: string | undefined = undefined, page: number = 1) => {
+  const [data, setData] = useState<Movie[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const options: any = { page };
+        if (genre) {
+          options.with_genres = genre;
+        }
+        const response = await discoverMovies(options);
+        setData(response.results);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to discover movies'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [genre, page]);
+
+  return { data, loading, error };
+};
+
+// Hook for discovering TV shows by genre
+export const useDiscoverTVShows = (genre: string | undefined = undefined, page: number = 1) => {
+  const [data, setData] = useState<TVShow[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const options: any = { page };
+        if (genre) {
+          options.with_genres = genre;
+        }
+        const response = await discoverTVShows(options);
+        setData(response.results);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to discover TV shows'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [genre, page]);
 
   return { data, loading, error };
 };
