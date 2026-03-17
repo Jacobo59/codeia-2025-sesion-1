@@ -38,9 +38,13 @@ export const HeroBanner = ({ media, loading = false }: HeroBannerProps) => {
         <img
           src={backdropUrl}
           alt={title}
-          className="absolute inset-0 h-full w-full object-cover opacity-60"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       )}
+
+      {/* Gradient Overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
 
       {/* Content */}
       <div className="relative container mx-auto px-4 h-full flex items-end pb-12 md:pb-20">

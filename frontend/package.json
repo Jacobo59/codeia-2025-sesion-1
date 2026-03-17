@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "changelog:suggest": "tsx scripts/suggest-commit.ts",
+    "changelog:notes": "tsx scripts/generate-release-notes.ts",
+    "changelog:version": "tsx scripts/propose-version-tags.ts",
+    "changelog:update": "tsx scripts/write-changelog.ts"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
@@ -32,6 +36,7 @@
     "postcss": "^8.5.8",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^8.0.0"

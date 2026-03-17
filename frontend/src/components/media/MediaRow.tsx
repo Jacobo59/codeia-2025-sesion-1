@@ -76,12 +76,12 @@ export const MediaRow = ({
         >
           {loading
             ? Array.from({ length: skeletonCount }).map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[160px]">
+                <div key={i} className="flex-shrink-0 w-[210px]">
                   <MediaCardSkeleton />
                 </div>
               ))
             : items?.map((item) => (
-                <div key={item.id} className="flex-shrink-0 w-[160px]">
+                <div key={item.id} className="flex-shrink-0 w-[210px]">
                   <MediaCard media={item} />
                 </div>
               ))}

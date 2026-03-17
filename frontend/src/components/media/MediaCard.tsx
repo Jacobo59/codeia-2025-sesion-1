@@ -18,7 +18,7 @@ export const MediaCard = ({
   const type = isMovie ? 'movie' : 'tv';
   const linkUrl = `/${type}/${media.id}`;
 
-  const imageSize = size === 'small' ? IMAGE_SIZES.POSTER_SMALL : size === 'large' ? IMAGE_SIZES.POSTER_XLARGE : IMAGE_SIZES.POSTER_MEDIUM;
+  const imageSize = size === 'small' ? IMAGE_SIZES.POSTER_MEDIUM : IMAGE_SIZES.POSTER_XLARGE;
   const posterUrl = media.poster_path
     ? `${TMDB_CONFIG.IMAGE_BASE_URL}/${imageSize}${media.poster_path}`
     : null;
@@ -55,7 +55,7 @@ export const MediaCard = ({
 
         {/* Rating Badge */}
         {media.vote_average > 0 && (
-          <div className="absolute right-2 top-2 rounded-full px-2 py-1 text-xs font-semibold text-white" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
+          <div className="absolute right-2 top-2 rounded-full px-3 py-1 text-xs font-semibold text-white bg-red-600">
             {media.vote_average.toFixed(1)}
           </div>
         )}
