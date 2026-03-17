@@ -4,9 +4,15 @@ import { useState, useEffect } from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useTheme } from '../../hooks/useTheme';
-import { Sun, Moon, Monitor, Search, LogIn, ChevronDown, Film } from 'lucide-react';
+import { Sun, Moon, Monitor, Search, LogIn, ChevronDown, Film, LogOut } from 'lucide-react';
+import type { User } from '../../contexts/AuthContext';
 
-export const Header = () => {
+interface HeaderProps {
+  user?: User | null;
+  onLogout?: () => void;
+}
+
+export const Header = ({ user, onLogout }: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
@@ -107,13 +113,44 @@ export const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-2">
-            {/* Login Button */}
-            <Link to="/login">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <LogIn className="h-4 w-4" />
-                <span className="hidden sm:inline">Iniciar sesión</span>
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                {/* User Avatar */}
+                <div className="flex items-center gap-2">
+                  {user.picture ? (
+                    <img
+                      src={user.picture}
+                      alt={user.name}
+                      className="h-8 w-8 rounded-full"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold">
+                      {user.name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                  )}
+                  <span className="text-sm font-medium hidden sm:inline">{user.name}</span>
+                </div>
+
+                {/* Logout Button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onLogout}
+                  className="gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="hidden sm:inline">Cerrar sesión</span>
+                </Button>
+              </>
+            ) : (
+              /* Login Button */
+              <Link to="/login">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <LogIn className="h-4 w-4" />
+                  <span className="hidden sm:inline">Iniciar sesión</span>
+                </Button>
+              </Link>
+            )}
 
             {/* Theme Toggle */}
             <div className="relative">
