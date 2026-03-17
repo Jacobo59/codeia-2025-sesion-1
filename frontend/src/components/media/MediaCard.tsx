@@ -14,6 +14,8 @@ export const MediaCard = ({
   size = 'medium',
 }: MediaCardProps) => {
   const title = 'title' in media ? media.title : media.name;
+  const releaseDate = 'release_date' in media ? media.release_date : media.first_air_date;
+  const year = releaseDate ? new Date(releaseDate).getFullYear() : null;
   const isMovie = 'title' in media;
   const type = isMovie ? 'movie' : 'tv';
   const linkUrl = `/${type}/${media.id}`;
@@ -66,6 +68,11 @@ export const MediaCard = ({
             {type === 'movie' ? 'Película' : 'Serie'}
           </Badge>
         )}
+      </div>
+      {/* Title and Year */}
+      <div className="mt-3">
+        <h3 className="font-semibold text-sm truncate">{title}</h3>
+        {year && <p className="text-xs text-muted-foreground">{year}</p>}
       </div>
     </Link>
   );
