@@ -1,157 +1,134 @@
-# Netflix Clone - TMDB API
+# Netflix Clone 🎬
 
-Una aplicación tipo Netflix construida con React 18, Vite, Tailwind CSS y shadcn/ui, que consume directamente la API de TMDB (The Movie Database).
+Un clon de Netflix desarrollado con React, TypeScript, Vite y TailwindCSS.
 
-## Tecnologías
+## ✨ Características
 
-- **Frontend**: React 18 con TypeScript
-- **Build Tool**: Vite
-- **Estilos**: Tailwind CSS
-- **Componentes UI**: shadcn/ui
-- **Routing**: React Router DOM
-- **API**: TMDB API (The Movie Database)
+- 🎬 Catálogo de películas y series de TMDB
+- 🔍 Búsqueda de contenido
+- 🌓 Temas: claro, oscuro y sistema
+- 🔐 Autenticación con Google OAuth
+- 📱 Diseño responsivo
+- ⚡ Rápido y optimizado con Vite
 
-## Características
+## 🚀 Tecnologías
 
-- 🏠 **Home**: Hero banner con contenido destacado y filas horizontales de películas y series
-- 🎬 **Movies**: Catálogo de películas populares, top rated y upcoming
-- 📺 **TV Shows**: Catálogo de series populares, top rated y on the air
-- 🔍 **Search**: Búsqueda en tiempo real de películas, series y personas
-- 📋 **Detalle**: Páginas completas de detalle con información, reparto, videos y contenido similar
-- 📱 **Responsive Design**: Optimizado para móvil y desktop
+- **Frontend**: React 19.2.4 + TypeScript
+- **Estilos**: TailwindCSS 4.2.1
+- **Routing**: React Router DOM 7.13.1
+- **Iconos**: Lucide React
+- **Autenticación**: @react-oauth/google
+- **API**: TMDB (The Movie Database)
 
-## Instalación
+## 📦 Instalación
 
-### 1. Clonar el repositorio
-
-```bash
+\`\`\`bash
+# Clonar el repositorio
+git clone <url-del-repositorio>
 cd frontend
-```
 
-### 2. Instalar dependencias
-
-```bash
+# Instalar dependencias
 npm install
-```
+\`\`\`
 
-### 3. Configurar variables de entorno
+## 🔑 Configuración de Variables de Entorno
 
-Crea un archivo `.env` en la raíz del proyecto y agrega tu API key de TMDB:
+Crea un archivo \`.env\` en la raíz del proyecto basándote en \`.env.example\`:
 
-```bash
-VITE_TMDB_API_KEY=your_api_key_here
+\`\`\`env
+# TMDB API Configuration
+VITE_TMDB_API_KEY=tu_tmdb_api_key
 VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
 VITE_TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
-```
 
-**¿Cómo obtener una API key de TMDB?**
+# Google OAuth
+VITE_GOOGLE_CLIENT_ID=tu_google_client_id
+\`\`\`
 
-1. Ve a [themoviedb.org](https://www.themoviedb.org/)
-2. Crea una cuenta gratuita
-3. Ve a Settings > API en tu perfil
-4. Solicita una API Key (Developer)
-5. Completa el formulario básico
-6. Recibirás la key en tu correo y en la página de configuración
+### Obtener API Key de TMDB
 
-### 4. Ejecutar el proyecto
+1. Ve a [https://www.themoviedb.org/](https://www.themoviedb.org/)
+2. Regístrate e inicia sesión
+3. Ve a "Settings" → "API"
+4. Crea una nueva API Key
 
-```bash
+### Configurar Google OAuth
+
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
+2. Crea un nuevo proyecto
+3. Habilita "Google+ API"
+4. Ve a "Credentials" → "Create Credentials" → "OAuth client ID"
+5. Configura:
+   - **Type**: Web application
+   - **Authorized JavaScript origins**: \`http://localhost:5173\`
+
+## 🏃 Scripts Disponibles
+
+\`\`\`bash
+# Iniciar servidor de desarrollo
 npm run dev
-```
 
-La aplicación estará disponible en `http://localhost:5173`
+# Construir para producción
+npm run build
 
-## Scripts Disponibles
+# Previsualizar build de producción
+npm run preview
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Inicia el servidor de desarrollo |
-| `npm run build` | Compila para producción |
-| `npm run lint` | Ejecuta ESLint |
-| `npm run preview` | Previsualiza el build de producción |
+# Ejecutar linter
+npm run lint
+\`\`\`
 
-## Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
-```
+\`\`\`
 frontend/
-├── public/
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── ui/              # Componentes de shadcn/ui
-│   │   ├── layout/          # Header, Footer
-│   │   ├── media/           # MediaCard, MediaGrid, MediaRow, HeroBanner
-│   │   ├── search/          # SearchBar, SearchResults
-│   │   └── detail/          # CastSection, SimilarMedia, VideoPlayer
-│   ├── config/
-│   │   └── tmdb.config.ts   # Configuración de TMDB
-│   ├── hooks/
-│   │   ├── useMedia.ts      # Hooks para contenido de media
-│   │   ├── useSearch.ts     # Hooks para búsqueda
-│   │   ├── useGenres.ts     # Hooks para géneros
-│   │   └── useInfiniteScroll.ts # Hook para scroll infinito
-│   ├── lib/
-│   │   ├── utils.ts         # Utilidades de shadcn/ui
-│   │   └── constants.ts     # Constantes de la aplicación
-│   ├── pages/
-│   │   ├── Home.tsx         # Página principal
-│   │   ├── Movies.tsx       # Página de películas
-│   │   ├── TVShows.tsx      # Página de series
-│   │   ├── Search.tsx       # Página de búsqueda
-│   │   └── MediaDetail.tsx  # Página de detalle
-│   ├── services/
-│   │   ├── tmdb.service.ts  # Llamadas a la API de TMDB
-│   │   └── api.client.ts    # Cliente HTTP base
-│   ├── types/
-│   │   └── tmdb.types.ts    # Tipos de TypeScript para TMDB
-│   ├── App.tsx              # Componente principal con routing
-│   └── main.tsx             # Punto de entrada
-├── .env                     # Variables de entorno (no versionado)
-├── .env.example             # Ejemplo de variables de entorno
-├── components.json          # Configuración de shadcn/ui
+│   ├── components/      # Componentes reutilizables
+│   │   ├── ui/          # Componentes de UI (Button, Input, etc.)
+│   │   └── layout/      # Layout (Header, Footer)
+│   ├── contexts/        # Contextos de React
+│   │   └── AuthContext.tsx
+│   ├── hooks/           # Custom hooks
+│   │   └── useTheme.ts
+│   ├── pages/           # Páginas de la aplicación
+│   │   ├── Home.tsx
+│   │   ├── Login.tsx
+│   │   ├── Movies.tsx
+│   │   └── ...
+│   ├── App.tsx
+│   └── main.tsx
+├── public/
+├── index.html
 ├── package.json
-├── tailwind.config.js
 ├── tsconfig.json
-└── vite.config.ts
-```
+├── vite.config.ts
+├── tailwind.config.ts
+└── .env.example
+\`\`\`
 
-## Rutas
+## 🎨 Temas
 
-| Ruta | Descripción |
-|------|-------------|
-| `/` | Página principal |
-| `/movies` | Catálogo de películas |
-| `/tv-shows` | Catálogo de series |
-| `/search` | Búsqueda de contenido |
-| `/movie/:id` | Detalle de película |
-| `/tv/:id` | Detalle de serie |
+La aplicación soporta tres temas:
+- **Claro**: Para preferencias claras
+- **Oscuro**: Para preferencias oscuras
+- **Sistema**: Sigue la preferencia del sistema operativo
 
-## API de TMDB Utilizada
+## 🔐 Autenticación
 
-La aplicación utiliza los siguientes endpoints de TMDB:
+El login con Google OAuth permite:
+- Autenticación segura sin contraseñas
+- Foto de perfil y nombre de Google
+- Persistencia de sesión en localStorage
+- Logout en un clic
 
-- **Trending**: `/trending/all/{time_window}`
-- **Popular**: `/movie/popular`, `/tv/popular`
-- **Top Rated**: `/movie/top_rated`, `/tv/top_rated`
-- **Upcoming/On The Air**: `/movie/upcoming`, `/tv/on_the_air`
-- **Details**: `/movie/{id}`, `/tv/{id}`
-- **Credits**: `/movie/{id}/credits`, `/tv/{id}/credits`
-- **Videos**: `/movie/{id}/videos`, `/tv/{id}/videos`
-- **Similar**: `/movie/{id}/similar`, `/tv/{id}/similar`
-- **Search**: `/search/multi`, `/search/movie`, `/search/tv`, `/search/person`
-- **Genres**: `/genre/movie/list`, `/genre/tv/list`
+## 📝 Licencia
 
-## Notas Importantes
+Este proyecto es un clon con fines educativos.
 
-- La API key de TMDB está expuesta en el frontend (aceptable para este proyecto)
-- Para producción, se recomienda implementar un backend como proxy
-- La API de TMDB tiene límites de rate limiting, por lo que se recomienda implementar caching
+## 👨‍💻 Autor
 
-## Créditos
+Desarrollado con ❤️ usando Claude Code
 
-- Datos provistos por [TMDB](https://www.themoviedb.org/)
-- Este producto usa la API de TMDB pero no está respaldado ni certificado por TMDB
+---
 
-## Licencia
-
-Este proyecto es solo para fines educativos.
+⚠️ **Nota**: No subas el archivo \`.env\` con tus credenciales reales. Usa el \`.env.example\` como referencia.
