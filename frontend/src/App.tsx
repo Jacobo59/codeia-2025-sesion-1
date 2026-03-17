@@ -12,12 +12,15 @@ import { AvisoLegal } from './pages/legal/AvisoLegal';
 import { Privacidad } from './pages/legal/Privacidad';
 import { Cookies } from './pages/legal/Cookies';
 import { Contratacion } from './pages/legal/Contratacion';
+import { AuthProvider, GoogleAuthProvider, useAuth } from './contexts/AuthContext';
 
-function App() {
+function AppContent() {
+  const { user, logout } = useAuth();
+
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
-        <Header />
+        <Header user={user} onLogout={logout} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -33,9 +36,19 @@ function App() {
             <Route path="/legal/contratacion" element={<Contratacion />} />
           </Routes>
         </main>
-        <Footer />
+        <Footer user={user} />
       </div>
     </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <GoogleAuthProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </GoogleAuthProvider>
   );
 }
 
