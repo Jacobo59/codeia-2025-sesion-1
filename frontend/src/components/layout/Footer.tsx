@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Film, Github, X, ChevronDown } from 'lucide-react';
+import { Film, Github, X, ChevronDown, Heart, List } from 'lucide-react';
+import type { User } from '../../contexts/AuthContext';
 
-export const Footer = () => {
+interface FooterProps {
+  user?: User | null;
+}
+
+export const Footer = ({ user }: FooterProps) => {
   const currentYear = new Date().getFullYear();
   const [openSection, setOpenSection] = useState<string | null>(null);
 
